@@ -1,2 +1,7 @@
-/.idea
-/obj
+.idea/
+obj/
+bin/
+/packages/
+riderModule.iml
+.vs/
+.DS_Store

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.OOProgramming", "Acme.OOProgramming.csproj", "{3D6B51FC-81C5-4B24-A623-605573B8FFA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.OOProgramming", "Acme.OOProgramming\Acme.OOProgramming.csproj", "{3D6B51FC-81C5-4B24-A623-605573B8FFA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
