@@ -12,6 +12,16 @@ public record Address
     public string PostalCode { get; init; }
     public string Country { get; init; }
     
+    /// <summary>
+    /// Create a new instance of <see cref="Address"/>
+    /// </summary>
+    /// <param name="street"></param>
+    /// <param name="number"></param>
+    /// <param name="city"></param>
+    /// <param name="stateOrRegion"></param>
+    /// <param name="postalCode"></param>
+    /// <param name="country"></param>
+    /// <exception cref="ArgumentException"></exception>
     public Address(
         string street,
         string number,
