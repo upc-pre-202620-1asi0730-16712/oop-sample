@@ -3,48 +3,110 @@ namespace Acme.OOProgramming.Shared.Domain.Model.ValueObjects;
 /// <summary>
 /// Represents an international physical address value object.
 /// </summary>
-public record Address
+public readonly record struct Address
 {
-    public string Street { get; init; }
-    public string Number { get; init; }
-    public string City { get; init; }
-    public string? StateOrRegion { get; init; }
-    public string PostalCode { get; init; }
-    public string Country { get; init; }
-    
     /// <summary>
-    /// Create a new instance of <see cref="Address"/>
+    /// The street address.
     /// </summary>
-    /// <param name="street"></param>
-    /// <param name="number"></param>
-    /// <param name="city"></param>
-    /// <param name="stateOrRegion"></param>
-    /// <param name="postalCode"></param>
-    /// <param name="country"></param>
-    /// <exception cref="ArgumentException"></exception>
-    public Address(
-        string street,
-        string number,
-        string city,
-        string? stateOrRegion,
-        string postalCode,
-        string country)
+    /// <exception cref="ArgumentException">Thrown when the street is null, blank, or exceeds 100 characters.</exception>
+    public string Street
     {
+        get => field ?? string.Empty;
+        init
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            if (value.Length > 100)
+                throw new ArgumentException("Street cannot exceed 100 characters.", nameof(value));
+            field = value;
+        }
+    }
 
-        if (string.IsNullOrWhiteSpace(street))
-            throw new ArgumentException("Street cannot be null or empty", nameof(street));
-        
-        if (string.IsNullOrWhiteSpace(number))
-            throw new ArgumentException("Number cannot be null or empty", nameof(number));
-        
-        if (string.IsNullOrWhiteSpace(city))
-            throw new ArgumentException("City cannot be null or empty", nameof(city));
-        
-        if (string.IsNullOrWhiteSpace(postalCode))
-            throw new ArgumentException("Postal code cannot be null or empty", nameof(postalCode));
-        
-        if (string.IsNullOrWhiteSpace(country))
-            throw new ArgumentException("Country cannot be null or empty", nameof(country));
+    /// <summary>
+    /// The street address number.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown when the number is null, blank, or exceeds 10 characters.</exception>
+    public string Number
+    {
+        get => field ?? string.Empty;
+        init
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            if (value.Length > 10)
+                throw new ArgumentException("Number cannot exceed 10 characters.", nameof(value));
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// The city.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown when the city is null, blank, or exceeds 100 characters.</exception>
+    public string City
+    {
+        get => field ?? string.Empty;
+        init
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            if (value.Length > 100)
+                throw new ArgumentException("City cannot exceed 100 characters.", nameof(value));
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// The state or region.
+    /// </summary>
+    public string? StateOrRegion { get; init; }
+
+    /// <summary>
+    /// The postal code.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown when the postal code is null, blank, or exceeds 20 characters.</exception>
+    public string PostalCode
+    {
+        get => field ?? string.Empty;
+        init
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            if (value.Length > 20)
+                throw new ArgumentException("Postal code cannot exceed 20 characters.", nameof(value));
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// The country.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown when the country is null, blank, or exceeds 100 characters.</exception>
+    public string Country
+    {
+        get => field ?? string.Empty;
+        init
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            if (value.Length > 100)
+                throw new ArgumentException("Country cannot exceed 100 characters.", nameof(value));
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// Prevents parameterless construction of <see cref="Address"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Always thrown because address components are required.</exception>
+    public Address() => throw new InvalidOperationException("Address must be initialized with street, number, city, postal code, and country.");
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Address"/>. 
+    /// </summary>
+    /// <param name="street">The address street, which must not be null, blank, or exceed 100 characters.</param>
+    /// <param name="number">The address number, which must not be null, blank, or exceed 10 characters.</param>
+    /// <param name="city">The address city, which must not be null, blank, or exceed 100 characters.</param>
+    /// <param name="stateOrRegion">The address state or region, which can be null.</param>
+    /// <param name="postalCode">The address postal code, which must not be null, blank, or exceed 20 characters.</param>
+    /// <param name="country">The address country, which must not be null, blank, or exceed 100 characters.</param>
+    public Address(string street, string number, string city, string? stateOrRegion, string postalCode, string country)
+    {
         
         Street = street;
         Number = number;
@@ -53,7 +115,12 @@ public record Address
         PostalCode = postalCode;
         Country = country;
     }
-    
-    public override string ToString() => $"{Street}, {Number}, {City}, {StateOrRegion}, {PostalCode}, {Country}";
-    
+
+    /// <summary>
+    /// Returns a string representation of the address.
+    /// </summary>
+    /// <returns>A string representation of the address, which may include the state or region if present.</returns>
+    public override string ToString() => string.IsNullOrWhiteSpace(StateOrRegion)
+        ? $"{Street}, {Number}, {City}, {PostalCode}, {Country}"
+        : $"{Street}, {Number}, {City}, {StateOrRegion}, {PostalCode}, {Country}";
 }

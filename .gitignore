@@ -1,7 +1,9 @@
-.idea/
-obj/
 bin/
+obj/
 /packages/
 riderModule.iml
-.vs/
+/_ReSharper.Caches/
 .DS_Store
+.idea/
+*.user
+.vs/
